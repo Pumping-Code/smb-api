@@ -1,1 +1,1 @@
-# spot-me-bro-api
+# spot-me-bro-server
