@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    render json: {test: "Hello World"}
+    @user = User.create(user_params)
   end
 
   def update
