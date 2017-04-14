@@ -1,0 +1,19 @@
+{
+  "name": "spot-me-bro-server",
+  "version": "1.0.0",
+  "description": "Backend for Spot Me Bro",
+  "main": "index.js",
+  "repository": "https://github.com/Pumping-Code/spot-me-bro-server.git",
+  "author": "Michael Lefkowitz & Phil Mok",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  }
+}
