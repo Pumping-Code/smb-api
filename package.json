@@ -1,0 +1,22 @@
+{
+  "name": "spot-me-bro-server",
+  "version": "1.0.0",
+  "description": "Backend for Spot Me Bro",
+  "main": "index.js",
+  "repository": "https://github.com/Pumping-Code/spot-me-bro-server.git",
+  "author": "Michael Lefkowitz & Phil Mok",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.2"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.1.3",
+    "eslint-plugin-import": "^2.2.0",
+    "nodemon": "^1.11.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  }
+}
