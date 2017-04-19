@@ -15,8 +15,12 @@ router.get('/users', (req, res) => {
 });
 
 router.post('/users', (req, res) => {
-  new User({ username: req.body.username }).save();
-  res.json({ username: req.body.username });
+  if (req.body.username) {
+    new User({ username: req.body.username }).save();
+    res.json({ username: req.body.username });
+  } else {
+    res.json({ error: 'you goofed' });
+  }
 });
 
 module.exports = router;
