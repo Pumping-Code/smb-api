@@ -2,6 +2,6 @@
 
 Backend for Spot Me Bro built in:
 
-* Ruby on Rails
+* Node
 
-* PostgreSQL
+* MongoDB
