@@ -3,8 +3,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const express = require('express');
-// const path = require('path');
-// const favicon = require('serve-favicon');
+const bodyParser = require('body-parser');
 
 const db = require('./config/db');
 
@@ -12,11 +11,7 @@ const routes = require('./routes/index');
 
 const app = express();
 
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'pug');
-
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-// app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
 
 app.use('/', routes);
 

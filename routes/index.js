@@ -2,22 +2,21 @@ const express = require('express');
 
 const router = express.Router();
 
-const Users = require('../models/users');
+const User = require('../models/user');
 
 router.get('/', (req, res) => {
   res.json({ home: true });
 });
 
 router.get('/users', (req, res) => {
-  Users.find({}, 'username when -_id').sort('-when').limit(10).then((results) => {
+  User.find({}, 'username when -_id').sort('-when').limit(10).then((results) => {
     res.json(results);
   });
 });
 
 router.post('/users', (req, res) => {
-  console.log(req);
-  // new History({ term: req.params.q }).save();
-  res.json(req);
+  new User({ username: req.body.username }).save();
+  res.json({ username: req.body.username });
 });
 
 module.exports = router;
