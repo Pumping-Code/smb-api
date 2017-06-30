@@ -8,14 +8,16 @@ const bodyParser = require('body-parser');
 const db = require('./config/db');
 
 const routes = require('./routes/index');
-const usersRouter = require('./routes/usersRouter')
+const usersRouter = require('./routes/usersRouter');
+const locationsRouter = require('./routes/locationsRouter');
 
 const app = express();
 
 app.use(bodyParser.json());
 
 app.use('/', routes);
-app.use('/users', usersRouter)
+app.use('/users', usersRouter);
+app.use('/locations', locationsRouter);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
