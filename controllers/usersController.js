@@ -1,16 +1,22 @@
 const User = require('../models/user');
 
 exports.createUser = function (req, res) {
-  if (req.body.username) {
-    new User({ username: req.body.username }).save();
-    res.json({ username: req.body.username });
-  } else {
-    res.json({ error: 'you goofed' });
-  }
+  User.find({ id: req.body.id })
+    .then((result) => {
+      if (result.length) {
+        // already exists in DB
+        res.status(200).json(result);
+      } else {
+        // create new user
+        new User({ username: req.body.name, id: req.body.id }).save();
+        res.status(201).json({ username: req.body.name });
+      }
+    })
+    .catch(err => res.status(400).json(err));
 };
 
 exports.getUsers = function (req, res) {
-  User.find({}, 'username when -_id').sort('-when').limit(10)
+  User.find({}).limit(10)
   .then((results) => {
     res.json(results);
   })
@@ -18,7 +24,7 @@ exports.getUsers = function (req, res) {
 };
 
 exports.getUser = function (req, res) {
-  User.findById(req.params.userId)
-  .then(user => res.status(200).json(location))
+  User.find({ id: req.params.userId })
+  .then(user => res.status(200).json(user))
   .catch(err => res.status(400).json(err));
 };
