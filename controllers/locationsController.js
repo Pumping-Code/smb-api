@@ -1,8 +1,8 @@
 const Location = require('../models/location');
 
 exports.sendLocation = function (req, res) {
-  if (req.body.location) {
-    new Location({ location: req.body.location }).save();
+  if (req.body.location && req.headers.auth) {
+    new Location({ location: req.body.location, user: req.headers.auth }).save();
     res.json({ location: req.body.location });
   } else {
     res.json({ error: 'you goofed' });
@@ -10,7 +10,7 @@ exports.sendLocation = function (req, res) {
 };
 
 exports.getLocations = function (req, res) {
-  Location.find({}, 'location when -_id').sort('-when').limit(10)
+  Location.find({}, 'location user when -_id').sort('-when').limit(10)
   .then((results) => {
     res.json(results);
   })

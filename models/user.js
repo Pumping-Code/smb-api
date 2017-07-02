@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   username: String,
+  id: String,
   when: { type: Date, default: Date.now },
 });
 
