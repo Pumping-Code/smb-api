@@ -2,7 +2,7 @@
   "name": "spot-me-bro-server",
   "version": "1.0.0",
   "engines": {
-    "node": "7.0.0"
+    "node": "8.1.4"
   },
   "description": "Backend for Spot Me Bro",
   "main": "index.js",
