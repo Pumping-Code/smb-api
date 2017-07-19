@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 
-const locationSchema = new mongoose.Schema({
+const Schema = mongoose.Schema;
+
+const locationSchema = new Schema({
   location: {
     lat: Number,
     lng: Number,
   },
-  user: String,
+  user: { type: Schema.Types.ObjectId, ref: 'User' },
   when: { type: Date, default: Date.now },
 });
 
