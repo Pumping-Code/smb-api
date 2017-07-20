@@ -1,14 +1,14 @@
 const User = require('../models/user');
 
 exports.createUser = function (req, res) {
-  User.find({ id: req.body.id })
+  User.find({ fbid: req.body.id })
     .then((result) => {
       if (result.length) {
         // already exists in DB
         res.status(200).json(result);
       } else {
         // create new user
-        new User({ username: req.body.name, id: req.body.id }).save();
+        new User({ username: req.body.name, fbid: req.body.id }).save();
         res.status(201).json({ username: req.body.name });
       }
     })
