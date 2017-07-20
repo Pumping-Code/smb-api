@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const morgan = require('morgan');
+const morgan = require('morgan')
 const db = require('./config/db');
 
 const routes = require('./routes/index');

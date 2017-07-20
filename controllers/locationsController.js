@@ -10,7 +10,7 @@ exports.sendLocation = function (req, res) {
 };
 
 exports.getLocations = function (req, res) {
-  Location.find().populate('fbid')
+  Location.find({}, 'location user when -_id').sort('-when').limit(10)
   .then((results) => {
     res.json(results);
   })
