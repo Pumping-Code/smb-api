@@ -1,8 +1,8 @@
 const Location = require('../models/location');
 
 exports.sendLocation = function (req, res) {
-  if (req.body.location && req.headers.auth) {
-    new Location({ location: req.body.location, user: req.headers.auth }).save();
+  if (req.body.location && req.headers.id) {
+    new Location({ location: req.body.location, user: req.headers.id }).save();
     res.json({ location: req.body.location });
   } else {
     res.json({ error: 'you goofed' });
