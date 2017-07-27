@@ -1,6 +1,6 @@
-# Spot Me Bro - Server
+# Spot Me Bro - API
 
-Backend for Spot Me Bro built in:
+Built with:
 
 * Node
 
