@@ -2,7 +2,20 @@ const Location = require('../models/location');
 
 exports.sendLocation = function (req, res) {
   if (req.body.location && req.headers.id) {
-    new Location({ location: req.body.location, user: req.headers.id }).save();
+    const { lat, lng } = req.body.location;
+    new Location({ location: [lng, lat], user: req.headers.id }).save();
+    Location.find({
+      location: {
+        $near: [lng, lat],
+        $maxDistance: 1000,
+      },
+    })
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
     res.json({ location: req.body.location });
   } else {
     res.json({ error: 'you goofed' });
