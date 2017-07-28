@@ -1,24 +1,31 @@
+const _ = require('lodash');
 const Location = require('../models/location');
 
 exports.sendLocation = function (req, res) {
   if (req.body.location && req.headers.id) {
     const { lat, lng } = req.body.location;
-    new Location({ location: [lng, lat], user: req.headers.id }).save();
-    Location.find({
-      location: {
-        $near: [lng, lat],
-        $maxDistance: 1000,
-      },
-    })
-    .then((result) => {
-      console.log(result);
+    const { id } = req.headers;
+    Location.findOneAndUpdate({ user: id }, { location: [lng, lat], user: id }, { upsert: true })
+    .then(() => {
+      Location.find({
+        location: {
+          $near: [lng, lat],
+          $maxDistance: 100,
+        },
+      })
+      .then((result) => {
+        _.remove(result, { user: id });
+        res.json(result); // array of close bros
+      })
+      .catch((err) => {
+        console.log('error', err);
+      });
     })
     .catch((err) => {
-      console.log(err);
+      console.log('error', err);
     });
-    res.json({ location: req.body.location });
   } else {
-    res.json({ error: 'you goofed' });
+    res.json({ error: 'location and/or fbid not sent' });
   }
 };
 
