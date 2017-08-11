@@ -5,10 +5,17 @@ exports.createUser = function (req, res) {
     .then((result) => {
       if (result.length) {
         // already exists in DB
-        res.status(200).json(result);
+        if (req.body.pushToken) {
+          User.findOneAndUpdate({ id: req.body.id }, { username: req.body.name, pushToken: req.body.pushToken }, { upsert: true })
+          .then(() => {
+            res.status(200).json(result);
+          });
+        } else {
+          res.status(200).json(result);
+        }
       } else {
         // create new user
-        new User({ username: req.body.name, id: req.body.id }).save();
+        new User({ username: req.body.name, id: req.body.id, pushToken: req.body.pushToken }).save();
         res.status(201).json({ username: req.body.name });
       }
     })
