@@ -4,9 +4,9 @@ const router = express.Router();
 const locations = require('../controllers/locationsController');
 
 router.use((req, res, next) => {
-  const token = req.headers.token;
-  console.log('token', token);
-  next();
+    const token = req.headers.token;
+    console.log('token', token);
+    next();
 });
 
 router.route('/').post(locations.sendLocation);
