@@ -1,4 +1,4 @@
-const Expo = require('expo-server-sdk');
+import Expo from 'expo-server-sdk';
 
 module.exports = function sendPush(somePushTokens) {
     console.log('somePushTokens', somePushTokens);

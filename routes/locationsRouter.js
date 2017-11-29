@@ -1,10 +1,10 @@
-const express = require('express');
+import express from 'express';
 
 const router = express.Router();
 const locations = require('../controllers/locationsController');
 
 router.use((req, res, next) => {
-    const token = req.headers.token;
+    const { token } = req.headers;
     console.log('token', token);
     next();
 });
