@@ -1,37 +1,53 @@
-const User = require('../models/user');
+import User from '../models/user';
 
-exports.createUser = function (req, res) {
-  User.find({ id: req.body.id })
-    .then((result) => {
-      if (result.length) {
-        // already exists in DB
-        if (req.body.pushToken) {
-          User.findOneAndUpdate({ id: req.body.id }, { username: req.body.name, pushToken: req.body.pushToken }, { upsert: true })
-          .then(() => {
-            res.status(200).json(result);
-          });
-        } else {
-          res.status(200).json(result);
-        }
-      } else {
-        // create new user
-        new User({ username: req.body.name, id: req.body.id, pushToken: req.body.pushToken }).save();
-        res.status(201).json({ username: req.body.name });
-      }
-    })
-    .catch(err => res.status(400).json(err));
-};
+/**
+* creates a user and retuns a promise
+*/
+function createUser(req) {
+    return User.find({ id: req.body.id })
+        .then((result) => {
+            if (result.length) {
+                // already exists in DB
+                if (req.body.pushToken) {
+                    return User.findOneAndUpdate(
+                        { id: req.body.id },
+                        { username: req.body.name, pushToken: req.body.pushToken },
+                        { upsert: true },
+                    )
+                        .then(user => Promise.resolve(user));
+                }
+                return Promise.resolve(result);
+            }
+            // create new user
+            const user = new User({
+                username: req.body.name,
+                id: req.body.id,
+                pushToken: req.body.pushToken,
+            });
 
-exports.getUsers = function (req, res) {
-  User.find({}).limit(10)
-  .then((results) => {
-    res.json(results);
-  })
-  .catch(err => res.status(400).json(err));
-};
+            return user.save((err, u) => {
+                if (err) {
+                    return Promise.resolve(err);
+                }
+                return Promise.resolve(u);
+            });
+        })
+        .catch(err => Promise.resolve(err));
+}
 
-exports.getUser = function (req, res) {
-  User.find({ id: req.params.userId })
-  .then(user => res.status(200).json(user))
-  .catch(err => res.status(400).json(err));
-};
+function getUsers(req, res) {
+    User.find({}).limit(10)
+        .then((results) => {
+            res.json(results);
+        })
+        .catch(err => res.status(400).json(err));
+}
+
+function getUser(req, res) {
+    User.find({ id: req.params.userId })
+        .then(user => res.status(200).json(user))
+        .catch(err => res.status(400).json(err));
+}
+
+export { createUser, getUsers, getUser };
+

@@ -1,16 +1,16 @@
-const express = require('express');
+import express from 'express';
+import { sendLocation, getLocations } from '../controllers/locationsController';
 
 const router = express.Router();
-const locations = require('../controllers/locationsController');
 
 router.use((req, res, next) => {
-  const token = req.headers.token;
-  console.log('token', token);
-  next();
+    const { token } = req.headers;
+    console.log('token', token);
+    next();
 });
 
-router.route('/').post(locations.sendLocation);
+router.route('/').post(sendLocation);
 
-router.route('/').get(locations.getLocations);
+router.route('/').get(getLocations);
 
 module.exports = router;
