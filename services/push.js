@@ -1,36 +1,36 @@
-const Expo = require('expo-server-sdk');
+import Expo from 'expo-server-sdk';
 
-module.exports = function sendPush(somePushTokens) {
+function sendPush(somePushTokens) {
     console.log('somePushTokens', somePushTokens);
-  // Create a new Expo SDK client
+    // Create a new Expo SDK client
     const expo = new Expo();
 
-  // Create the messages that you want to send to clients
+    // Create the messages that you want to send to clients
     const messages = [];
     for (const pushToken of somePushTokens) {
         console.log('pushToken', pushToken);
-    // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
+        // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
 
-    // Check that all your push tokens appear to be valid Expo push tokens
+        // Check that all your push tokens appear to be valid Expo push tokens
         if (!Expo.isExpoPushToken(pushToken)) {
             console.error(`Push token ${pushToken} is not a valid Expo push token`);
             continue;
         }
 
-    // Construct a message (see https://docs.expo.io/versions/latest/guides/push-notifications.html)
+        // Construct a message (see https://docs.expo.io/versions/latest/guides/push-notifications.html)
         messages.push({
             to: pushToken,
             sound: 'default',
-            body: 'This is a test notification',
+            body: 'A BRO NEEDS YOUR HELP!',
             data: { withSome: 'data' },
         });
     }
 
-  // The Expo push notification service accepts batches of notifications so
-  // that you don't need to send 1000 requests to send 1000 notifications. We
-  // recommend you batch your notifications to reduce the number of requests
-  // and to compress them (notifications with similar content will get
-  // compressed).
+    // The Expo push notification service accepts batches of notifications so
+    // that you don't need to send 1000 requests to send 1000 notifications. We
+    // recommend you batch your notifications to reduce the number of requests
+    // and to compress them (notifications with similar content will get
+    // compressed).
     const chunks = expo.chunkPushNotifications(messages);
 
     (async () => {
@@ -46,4 +46,6 @@ module.exports = function sendPush(somePushTokens) {
             }
         }
     })();
-};
+}
+
+export { sendPush };
