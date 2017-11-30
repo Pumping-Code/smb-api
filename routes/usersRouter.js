@@ -1,12 +1,12 @@
 import express from 'express';
+import { createUser, getUsers, getUser } from '../controllers/usersController';
 
 const router = express.Router();
-const users = require('../controllers/usersController');
 
-router.route('/').post(users.createUser);
+router.route('/').post(createUser);
 
-router.route('/').get(users.getUsers);
+router.route('/').get(getUsers);
 
-router.route('/:userId').get(users.getUser);
+router.route('/:userId').get(getUser);
 
 module.exports = router;

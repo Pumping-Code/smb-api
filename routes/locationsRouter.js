@@ -1,7 +1,7 @@
 import express from 'express';
+import { sendLocation, getLocations } from '../controllers/locationsController';
 
 const router = express.Router();
-const locations = require('../controllers/locationsController');
 
 router.use((req, res, next) => {
     const { token } = req.headers;
@@ -9,8 +9,8 @@ router.use((req, res, next) => {
     next();
 });
 
-router.route('/').post(locations.sendLocation);
+router.route('/').post(sendLocation);
 
-router.route('/').get(locations.getLocations);
+router.route('/').get(getLocations);
 
 module.exports = router;

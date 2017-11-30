@@ -1,9 +1,9 @@
-const _ = require('lodash');
-const push = require('../services/push');
-const Location = require('../models/location');
-const User = require('../models/user');
+import _ from 'lodash';
+import push from '../services/push';
+import Location from '../models/location';
+import User from '../models/user';
 
-exports.sendLocation = function (req, res) {
+function sendLocation(req, res) {
     if (req.body.location && req.headers.id) {
         const { lat, lng } = req.body.location;
         const { id } = req.headers;
@@ -43,12 +43,15 @@ exports.sendLocation = function (req, res) {
     } else {
         res.json({ error: 'location and/or fbid not sent' });
     }
-};
+}
 
-exports.getLocations = function (req, res) {
+function getLocations(req, res) {
     Location.find({}, 'location user when -_id').sort('-when').limit(10)
         .then((results) => {
             res.json(results);
         })
         .catch(err => res.status(400).json(err));
-};
+}
+
+export { sendLocation, getLocations };
+
