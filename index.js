@@ -1,18 +1,20 @@
+import dotenv from 'dotenv';
+
 if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
+    dotenv.config();
 }
+
+require('./lib/db');
 
 import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 
-const db = require('../config/db');
-const jwt = require('../lib/jwt.js');
-
-import routes from '../routes/index';
-import usersRouter from '../routes/usersRouter';
-import locationsRouter from '../routes/locationsRouter';
-import authRouter from '../routes/authRouter';
+import { decode } from './lib/jwt';
+import routes from './routes/index';
+import usersRouter from './routes/usersRouter';
+import locationsRouter from './routes/locationsRouter';
+import authRouter from './routes/authRouter';
 
 const app = express();
 
@@ -30,10 +32,11 @@ app.use((req, res, next) => {
     }
     // validate the jwt
     if (req.headers.jwt) {
-        const decodedId = jwt.decode(req.headers.jwt);
-        if (decodedId === req.headers.id) {
+        const decodedId = decode(req.headers.jwt, process.env.JWT_SECRET);
+        if (decodedId.id === req.headers.id) {
             return next();
         }
+        console.log('decodedId.id not equal to req.headers.id');
     }
 
     return res.status(403);

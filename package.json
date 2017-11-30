@@ -30,8 +30,8 @@
     "nodemon": "^1.11.0"
   },
   "scripts": {
-    "start": "nodemon lib/index.js --exec babel-node",
+    "start": "nodemon index.js --exec babel-node",
     "build": "babel lib -d dist",
-    "serve": "node dist/index.js"
+    "serve": "node index.js"
   }
 }

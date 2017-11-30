@@ -1,6 +1,6 @@
 import Expo from 'expo-server-sdk';
 
-module.exports = function sendPush(somePushTokens) {
+function sendPush(somePushTokens) {
     console.log('somePushTokens', somePushTokens);
     // Create a new Expo SDK client
     const expo = new Expo();
@@ -21,7 +21,7 @@ module.exports = function sendPush(somePushTokens) {
         messages.push({
             to: pushToken,
             sound: 'default',
-            body: 'This is a test notification',
+            body: 'A BRO NEEDS YOUR HELP!',
             data: { withSome: 'data' },
         });
     }
@@ -46,4 +46,6 @@ module.exports = function sendPush(somePushTokens) {
             }
         }
     })();
-};
+}
+
+export { sendPush };
