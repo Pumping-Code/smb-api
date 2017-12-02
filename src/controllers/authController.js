@@ -1,4 +1,4 @@
-import { encode } from '../lib/jwt';
+import { encode } from '../config/jwt';
 import { createUser } from '../controllers/usersController';
 
 /**
