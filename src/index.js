@@ -4,13 +4,13 @@ if (process.env.NODE_ENV !== 'production') {
     dotenv.config();
 }
 
-require('./lib/db');
+require('./config/db');
 
 import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 
-import { decode } from './lib/jwt';
+import { decode } from './config/jwt';
 import routes from './routes/index';
 import usersRouter from './routes/usersRouter';
 import locationsRouter from './routes/locationsRouter';
