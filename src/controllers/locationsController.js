@@ -4,7 +4,7 @@ import Location from '../models/location';
 import User from '../models/user';
 
 function sendLocation(req, res) {
-    if (req.body.location && req.headers.id) {
+    if (req.body.location) {
         const { lat, lng } = req.body.location;
         const { id } = req.headers;
         Location.findOneAndUpdate({ user: id }, { location: [lng, lat], user: id }, { upsert: true })
@@ -34,14 +34,14 @@ function sendLocation(req, res) {
                         res.json(result); // array of close bros
                     })
                     .catch((err) => {
-                        console.log('error', err);
+                        res.status(400).json(err);
                     });
             })
             .catch((err) => {
-                console.log('error', err);
+                res.status(400).json(err);
             });
     } else {
-        res.json({ error: 'location and/or fbid not sent' });
+        res.status(400).send('Location Not Sent');
     }
 }
 

@@ -3,14 +3,10 @@ import { sendLocation, getLocations } from '../controllers/locationsController';
 
 const locationsRouter = Router();
 
-locationsRouter.use((req, res, next) => {
-    const { token } = req.headers;
-    console.log('token', token);
-    next();
-});
-
+// POST to /locations
 locationsRouter.route('/').post(sendLocation);
 
+// GET to /locations
 locationsRouter.route('/').get(getLocations);
 
 export { locationsRouter };

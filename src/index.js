@@ -30,8 +30,7 @@ app.use((req, res, next) => {
         }
         console.log('decodedId.id not equal to req.headers.id');
     }
-
-    return res.status(403);
+    return res.status(403).send('Invalid Authorization Token');
 });
 
 app.use('/auth', authRouter);
