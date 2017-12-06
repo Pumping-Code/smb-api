@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { compact, map, remove } from 'lodash';
 import { sendPush } from '../services/push';
 import Location from '../models/location';
 import User from '../models/user';
@@ -16,19 +16,19 @@ function sendLocation(req, res) {
                     },
                 })
                     .then((result) => {
-                        _.remove(result, { user: id }); // remove ourselves
+                        remove(result, { user: id }); // remove ourselves
 
                         // super wonky -- find all other users with push tokens
-                        const tokens = _.map(result, ({ user }) => User.find({ id: user })
+                        const tokenPromises = map(result, ({ user }) => User.find({ id: user })
                             .then((foundUser) => {
                                 if (foundUser[0].pushToken) {
                                     return foundUser[0].pushToken;
                                 }
                             }));
-                        Promise.all(tokens).then((vals) => {
+                        Promise.all(tokenPromises).then((tokens) => {
                             // remove undefineds from the arr and then send the array to the push service
-                            vals = _.compact(vals);
-                            sendPush(vals);
+                            const pushTokens = compact(tokens);
+                            sendPush(pushTokens);
                         });
 
                         res.json(result); // array of close bros

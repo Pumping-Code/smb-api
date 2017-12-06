@@ -1,9 +1,5 @@
-import express from 'express';
-
-const router = express.Router();
-
-router.get('/', (req, res) => {
-    res.json({ home: true });
-});
-
-module.exports = router;
+export * from './authRouter';
+export * from './locationsRouter';
+export * from './rootRouter';
+export * from './spotMeRouter';
+export * from './usersRouter';

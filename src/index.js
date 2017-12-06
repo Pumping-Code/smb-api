@@ -1,20 +1,12 @@
-import dotenv from 'dotenv';
-
-if (process.env.NODE_ENV !== 'production') {
-    dotenv.config();
-}
-
-require('./config/db');
-
 import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 
+import './config/env';
 import { decode } from './config/jwt';
-import routes from './routes/index';
-import usersRouter from './routes/usersRouter';
-import locationsRouter from './routes/locationsRouter';
-import authRouter from './routes/authRouter';
+import { authRouter, locationsRouter, rootRouter, spotMeRouter, usersRouter } from './routes';
+
+require('./config/db');
 
 const app = express();
 
@@ -22,7 +14,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/', routes);
+app.use('/', rootRouter);
 
 // validate JWT
 app.use((req, res, next) => {
@@ -42,9 +34,10 @@ app.use((req, res, next) => {
     return res.status(403);
 });
 
-app.use('/users', usersRouter);
-app.use('/locations', locationsRouter);
 app.use('/auth', authRouter);
+app.use('/locations', locationsRouter);
+app.use('/spot-me', spotMeRouter);
+app.use('/users', usersRouter);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
