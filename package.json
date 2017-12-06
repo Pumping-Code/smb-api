@@ -19,15 +19,15 @@
     "express": "^4.15.4",
     "jwt-simple": "^0.5.1",
     "lodash": "^4.17.4",
-    "mongoose": "^4.9.5",
+    "mongoose": "^4.13.6",
     "morgan": "^1.8.2",
     "session": "^0.1.0"
   },
   "devDependencies": {
-    "eslint": "^4.12.0",
+    "eslint": "^4.12.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.2.0",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.12.5"
   },
   "scripts": {
     "start:dev": "nodemon src/index.js --exec babel-node",

@@ -1,16 +1,12 @@
-import express from 'express';
+import { Router } from 'express';
 import { sendLocation, getLocations } from '../controllers/locationsController';
 
-const router = express.Router();
+const locationsRouter = Router();
 
-router.use((req, res, next) => {
-    const { token } = req.headers;
-    console.log('token', token);
-    next();
-});
+// POST to /locations
+locationsRouter.route('/').post(sendLocation);
 
-router.route('/').post(sendLocation);
+// GET to /locations
+locationsRouter.route('/').get(getLocations);
 
-router.route('/').get(getLocations);
-
-module.exports = router;
+export { locationsRouter };

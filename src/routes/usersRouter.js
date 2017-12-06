@@ -1,12 +1,15 @@
-import express from 'express';
+import { Router } from 'express';
 import { createUser, getUsers, getUser } from '../controllers/usersController';
 
-const router = express.Router();
+const usersRouter = Router();
 
-router.route('/').post(createUser);
+// POST to /users
+usersRouter.route('/').post(createUser);
 
-router.route('/').get(getUsers);
+// GET to /users
+usersRouter.route('/').get(getUsers);
 
-router.route('/:userId').get(getUser);
+// GET to /users/:userId
+usersRouter.route('/:userId').get(getUser);
 
-module.exports = router;
+export { usersRouter };
