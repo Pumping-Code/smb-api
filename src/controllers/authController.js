@@ -10,8 +10,8 @@ function login(req, res) {
     createUser(req, res)
         .then((response) => {
             const user = {
-                id: response[0].id,
-                username: response[0].username,
+                id: response.id,
+                username: response.username,
                 jwt: token,
             };
             res.status(200).json(user);
