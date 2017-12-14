@@ -1,4 +1,4 @@
-import { compact, map, remove } from 'lodash';
+import { map, forEach } from 'lodash';
 import { sendPush } from '../services/push';
 import Location from '../models/location';
 import User from '../models/user';
@@ -16,19 +16,27 @@ function sendLocation(req, res) {
                     },
                 })
                     .then((result) => {
-                        remove(result, { user: id }); // remove ourselves
-
                         // super wonky -- find all other users with push tokens
-                        const tokenPromises = map(result, ({ user }) => User.find({ id: user })
+                        const userPromises = map(result, ({ user }) => User.find({ id: user })
                             .then((foundUser) => {
                                 if (foundUser[0].pushToken) {
-                                    return foundUser[0].pushToken;
+                                    return foundUser[0];
                                 }
                             }));
-                        Promise.all(tokenPromises).then((tokens) => {
+                        Promise.all(userPromises).then((users) => {
                             // remove undefineds from the arr and then send the array to the push service
-                            const pushTokens = compact(tokens);
-                            sendPush(pushTokens);
+                            let sendingUser = {};
+                            const recievingUsers = [];
+                            forEach(users, (user) => {
+                                if (user.id === id) {
+                                    sendingUser = user;
+                                } else {
+                                    recievingUsers.push(user.pushToken);
+                                }
+                            });
+
+                            // send push notifications to users
+                            sendPush(recievingUsers, sendingUser);
                         });
 
                         res.json(result); // array of close bros
@@ -54,4 +62,3 @@ function getLocations(req, res) {
 }
 
 export { sendLocation, getLocations };
-
