@@ -2,7 +2,7 @@ import Expo from 'expo-server-sdk';
 import 'babel-polyfill';
 
 
-function sendPush(somePushTokens) {
+function sendPush(somePushTokens, pushData) {
     console.log('somePushTokens', somePushTokens);
     // Create a new Expo SDK client
     const expo = new Expo();
@@ -24,7 +24,7 @@ function sendPush(somePushTokens) {
             to: pushToken,
             sound: 'default',
             body: 'A BRO NEEDS YOUR HELP!',
-            data: { withSome: 'data' },
+            data: pushData,
         });
     }
 

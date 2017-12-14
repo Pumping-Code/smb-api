@@ -16,6 +16,9 @@ function sendLocation(req, res) {
                     },
                 })
                     .then((result) => {
+                        // set ourselves aside for the push notification
+                        const sendingUser = result.filter(user => user.id === id)[0];
+
                         remove(result, { user: id }); // remove ourselves
 
                         // super wonky -- find all other users with push tokens
@@ -28,7 +31,8 @@ function sendLocation(req, res) {
                         Promise.all(tokenPromises).then((tokens) => {
                             // remove undefineds from the arr and then send the array to the push service
                             const pushTokens = compact(tokens);
-                            sendPush(pushTokens);
+                            // send push notifications to users
+                            sendPush(pushTokens, sendingUser);
                         });
 
                         res.json(result); // array of close bros
@@ -54,4 +58,3 @@ function getLocations(req, res) {
 }
 
 export { sendLocation, getLocations };
-
