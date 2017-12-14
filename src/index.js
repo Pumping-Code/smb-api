@@ -28,9 +28,9 @@ app.use((req, res, next) => {
         if (decodedId.id === req.headers.id) {
             return next();
         }
-        console.log('decodedId.id not equal to req.headers.id');
+        return res.status(403).send('Invalid Authorization Token');
     }
-    return res.status(403).send('Invalid Authorization Token');
+    return res.status(403).send('No Authorization Token');
 });
 
 app.use('/auth', authRouter);

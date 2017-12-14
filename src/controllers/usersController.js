@@ -16,7 +16,7 @@ function createUser(req) {
                     )
                         .then(user => Promise.resolve(user));
                 }
-                return Promise.resolve(result);
+                return Promise.resolve(result[0]);
             }
             // create new user
             const user = new User({
