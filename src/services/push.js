@@ -1,14 +1,12 @@
 import Expo from 'expo-server-sdk';
 
 function sendPush(somePushTokens) {
-    console.log('somePushTokens', somePushTokens);
     // Create a new Expo SDK client
     const expo = new Expo();
 
     // Create the messages that you want to send to clients
     const messages = [];
     for (const pushToken of somePushTokens) {
-        console.log('pushToken', pushToken);
         // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
 
         // Check that all your push tokens appear to be valid Expo push tokens
@@ -40,9 +38,9 @@ function sendPush(somePushTokens) {
         for (const chunk of chunks) {
             try {
                 const receipts = await expo.sendPushNotificationsAsync(chunk);
-                console.log(receipts);
+                console.log('receipts', receipts);
             } catch (error) {
-                console.error(error);
+                console.error('error', error);
             }
         }
     })();
