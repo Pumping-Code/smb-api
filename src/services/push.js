@@ -1,12 +1,16 @@
 import Expo from 'expo-server-sdk';
+import 'babel-polyfill';
+
 
 function sendPush(somePushTokens) {
+    console.log('somePushTokens', somePushTokens);
     // Create a new Expo SDK client
     const expo = new Expo();
 
     // Create the messages that you want to send to clients
     const messages = [];
     for (const pushToken of somePushTokens) {
+        console.log('pushToken', pushToken);
         // Each push token looks like ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]
 
         // Check that all your push tokens appear to be valid Expo push tokens
